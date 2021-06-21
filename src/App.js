@@ -1,16 +1,35 @@
 import React from "react";
 class App extends React.Component {
-  state = { text: "", array: [] };
+  state = { text: "", array: [], dec:'' };
+  
   taskHandler = (e) => {
     this.setState({ text: e.target.value });
   };
   addHandler = () => {
     const ary = [...this.state.array, this.state.text];
     this.setState({ array: ary });
-    this.setState({ text: "" });
+    this.setState({ text: "",dec:'' });
+  };
+  onDelete = (t) => {
+    const text = this.state.array.filter((t) => this.state.array !== t);
   };
   renderedList = () => {
-    return this.state.array.map((t) => <div className='ui bulleted list'> {t}</div>);
+    return this.state.array.map((t) => (
+      <div  style={{textDecoration:this.state.dec}} className="ui bulleted list">
+        {t}{" "}
+        <button
+          onClick={() => {
+            const text = this.state.array.filter((item) => item !== t);
+            this.setState({ array: text });
+          }}
+          className="ui button red"
+        >
+          {" "}
+          Delete
+        </button>
+       
+      </div>
+    ));
   };
   render() {
     return (
